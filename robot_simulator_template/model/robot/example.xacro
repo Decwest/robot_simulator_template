@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="example" >
+
+    <!-- mobile base -->
+    <xacro:include filename="$(find robot_simulator_template)/model/mobile_base/diff.xacro" />
+
+    <!-- 2D LiDAR -->
+    <xacro:include filename="$(find robot_simulator_template)/model/lidar/hokuyo.xacro" />
+    <xacro:hokuyo parent="base_link" num="1" xyz="0.0 0 0.1" rpy="0 0 0" />
+
+    <!-- 3D LiDAR -->
+    <xacro:include filename="$(find robot_simulator_template)/model/lidar/velodyne.xacro" />
+    <xacro:velodyne name="velodyne" parent="base_link" xyz="-0.1 0 0.2" rpy="0.0 0.0 0.0 " topic="/velodyne_points" hz="10" samples="440" collision_range="0.1" min_range="0.3" max_range="20.0" noise="0.008"/>
+
+    <!-- imu -->
+    <xacro:include filename="$(find robot_simulator_template)/model/imu/imu.xacro" />
+    <xacro:imu_macro prefix="imu" parent="base_link" xyz="0.1 0 0.1" rpy="0.0 0.0 0.0" />
+
+    <!-- camera -->
+    <xacro:include filename="$(find robot_simulator_template)/model/camera/rs_d435.urdf.xacro" />
+    <xacro:sensor_d435 parent="base_link" name="camera" topics_ns="camera">
+      <origin xyz="0.2 0.0 0.2" rpy="0 0 0"/>
+    </xacro:sensor_d435>
+
+</robot>

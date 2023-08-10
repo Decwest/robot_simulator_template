@@ -1,0 +1,57 @@
+<robot name="lrf" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- reference https://decwest.github.io/introduction-to-ros/gazebo/sensor/ -->
+    <xacro:macro name="hokuyo" params="parent num xyz rpy">
+      <joint name="${parent}_to_scan${num}" type="fixed">
+        <parent link="${parent}"/>
+        <child  link="scan${num}"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </joint>
+      <link name="scan${num}">
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <cylinder radius="0.025" length="0.06" />
+          </geometry>
+          <material name="red" />
+        </visual>
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <cylinder radius="0.025" length="0.06" />
+          </geometry>
+        </collision>
+      </link>
+      <gazebo reference="scan${num}">
+        <material>Gazebo/Red</material>
+        <sensor type="ray" name="scan${num}">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>false</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>400</samples>
+                <resolution>1</resolution>
+                <min_angle>${radians(-135)}</min_angle>
+                <max_angle>${radians(135)}</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.10</min>
+              <max>20.0</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </ray>
+          <plugin name="gazebo_ros_lidar_controller" filename="libgazebo_ros_laser.so">
+            <topicName>scan</topicName>
+            <frameName>scan${num}</frameName>
+          </plugin>
+        </sensor>
+      </gazebo>
+    </xacro:macro> 
+  </robot>

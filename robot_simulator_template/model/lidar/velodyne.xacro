@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<robot name="velodyne" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="gpu" default="false"/>
+  <xacro:property name="gpu" value="$(arg gpu)" />
+  <xacro:macro name="velodyne" params="parent name xyz rpy topic hz samples collision_range min_range max_range noise">
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <xacro:VLP-16 parent="${parent}" name="${name}" topic="${topic}" hz="${hz}" samples="${samples}" collision_range="${collision_range}"  min_range="${min_range}" max_range="${max_range}" noise="${noise}" gpu="${gpu}" organize_cloud="true">
+        <origin xyz="${xyz}" rpy="${rpy}" />
+    </xacro:VLP-16>
+  </xacro:macro>
+</robot>

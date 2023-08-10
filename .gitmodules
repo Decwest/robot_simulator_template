@@ -1,0 +1,6 @@
+[submodule "third_party/velodyne_simulator"]
+	path = third_party/velodyne_simulator
+	url = https://bitbucket.org/DataspeedInc/velodyne_simulator.git
+[submodule "third_party/realsense_gazebo_plugin"]
+	path = third_party/realsense_gazebo_plugin
+	url = https://github.com/pal-robotics/realsense_gazebo_plugin.git
